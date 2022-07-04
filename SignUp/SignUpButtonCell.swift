@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol SignUpButtonCellDelegate: AnyObject {
+    func didTapButton()
+}
+
 class SignUpButtonCell: UITableViewCell {
 
     let signUpButton = BigButton(color: .systemBlue, title: "Sign Up")
     
+    weak var delegate: SignUpButtonCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,6 +28,8 @@ class SignUpButtonCell: UITableViewCell {
     
     private func configure() {
         addSubview(signUpButton)
+        signUpButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        selectionStyle = .none
         
         NSLayoutConstraint.activate([
             signUpButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -32,5 +39,8 @@ class SignUpButtonCell: UITableViewCell {
             
         ])
     }
-
+    
+    @objc func buttonTapped() {
+        delegate?.didTapButton()
+    }
 }

@@ -38,8 +38,8 @@ class SignUpViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
         configureUI()
+        configureTableView()
     }
     
     @objc func emailDidChange() {
@@ -64,13 +64,13 @@ class SignUpViewController: UITableViewController {
     
     private func configureTableView() {
         tableView.rowHeight = 44
-        tableView.allowsSelection = false
         
         emailAdressCell.backgroundColor = .systemBackground
         passwordCell.backgroundColor = .systemBackground
         passwordConfirmationCell.backgroundColor = .systemBackground
         agreeTermsCell.backgroundColor = .systemBackground
         signUpButtonCell.backgroundColor = .systemBackground
+        signUpButtonCell.delegate = self
         
         emailAdressField.frame = emailAdressCell.contentView.bounds.insetBy(dx: 15, dy: 0)
         passwordField.frame = passwordCell.contentView.bounds.insetBy(dx: 15, dy: 0)
@@ -135,6 +135,7 @@ class SignUpViewController: UITableViewController {
         case 2:
             switch indexPath.row {
             case 0:
+                signUpButtonCell.delegate = self
                 return signUpButtonCell
             default:
                 return signUpButtonCell
@@ -156,7 +157,11 @@ class SignUpViewController: UITableViewController {
             return ""
         }
     }
+}
 
-
+extension SignUpViewController: SignUpButtonCellDelegate {
+    func didTapButton() {
+        print("button tapped")
+    }
 }
 

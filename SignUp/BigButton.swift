@@ -9,8 +9,6 @@ import UIKit
 
 class BigButton: UIButton {
     
-    var didTapButton: (() -> Void)?
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -31,12 +29,5 @@ class BigButton: UIButton {
         layer.cornerRadius = 10
         titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
         translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addTarget(self, action: #selector(signUpTapped), for: .touchUpInside)
     }
-    
-    @objc func signUpTapped() {
-        didTapButton?()
-    }
-    
 }

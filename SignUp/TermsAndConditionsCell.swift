@@ -22,6 +22,7 @@ class TermsAndConditionsCell: UITableViewCell {
     }
     
     private func configure() {
+        selectionStyle = .none
         termsConditionsLabel.translatesAutoresizingMaskIntoConstraints = false
         termsConditionsSwitch.translatesAutoresizingMaskIntoConstraints = false
         
@@ -30,7 +31,7 @@ class TermsAndConditionsCell: UITableViewCell {
         addSubview(termsConditionsLabel)
         addSubview(termsConditionsSwitch)
         
-        termsConditionsLabel.text = "Terms and Conditions"
+        termsConditionsLabel.text = "I agree to the Terms"
         
         NSLayoutConstraint.activate([
             termsConditionsSwitch.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
