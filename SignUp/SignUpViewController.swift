@@ -43,15 +43,25 @@ class SignUpViewController: UITableViewController {
     private var passwordConfirmationSubject = CurrentValueSubject<String, Never>("")
     private var agreeToTermsSubject = CurrentValueSubject<Bool, Never>(false)
     
-    private func emailIsValid(email: String) -> Bool {
-        email.contains("@") && email.contains(".")
-    }
+    private var cancellables: Set<AnyCancellable> = []
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureTableView()
+    }
+    
+    private func emailIsValid(_ email: String) -> Bool {
+        email.contains("@") && email.contains(".")
+    }
+    
+    //Publishers
+    
+    private var emailIsValid: AnyPublisher<Bool, Never> {
+        emailSubject
+            .map { [weak self] in self?.emailIsValid($0) }
+            .replaceNil(with: false)
+            .eraseToAnyPublisher()
     }
     
     @objc func emailDidChange() {
