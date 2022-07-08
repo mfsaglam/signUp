@@ -27,7 +27,7 @@ class SignUpButtonCell: UITableViewCell {
     }
     
     private func configure() {
-        addSubview(signUpButton)
+        contentView.addSubview(signUpButton)
         signUpButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         selectionStyle = .none
         

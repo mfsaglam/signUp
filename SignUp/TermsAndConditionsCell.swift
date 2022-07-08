@@ -28,8 +28,8 @@ class TermsAndConditionsCell: UITableViewCell {
         
         termsConditionsSwitch.addTarget(self, action: #selector(agreeSwitchDidChange), for: .editingChanged)
         
-        addSubview(termsConditionsLabel)
-        addSubview(termsConditionsSwitch)
+        contentView.addSubview(termsConditionsLabel)
+        contentView.addSubview(termsConditionsSwitch)
         
         termsConditionsLabel.text = "I agree to the Terms"
         
