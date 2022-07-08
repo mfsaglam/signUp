@@ -59,7 +59,7 @@ class SignUpViewController: UITableViewController {
     }
     
     @objc func passwordConfirmationDidChange() {
-        
+        passwordConfirmationSubject.send(passwordConfirmationField.text ?? "")
     }
     
     @objc func agreeSwitchDidChange() {
