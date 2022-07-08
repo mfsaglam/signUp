@@ -42,6 +42,10 @@ class SignUpViewController: UITableViewController {
     private var passwordSubject = CurrentValueSubject<String, Never>("")
     private var passwordConfirmationSubject = CurrentValueSubject<String, Never>("")
     private var agreeToTermsSubject = CurrentValueSubject<Bool, Never>(false)
+    
+    private func emailIsValid(email: String) -> Bool {
+        email.contains("@") && email.contains(".")
+    }
 
     
     override func viewDidLoad() {
@@ -64,10 +68,6 @@ class SignUpViewController: UITableViewController {
     
     @objc func agreeSwitchDidChange() {
         agreeToTermsSubject.send(agreeTermsCell.termsConditionsSwitch.isOn)
-    }
-    
-    @objc func signUpTapped() {
-
     }
     
     private func configureTableView() {
