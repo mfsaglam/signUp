@@ -36,6 +36,10 @@ class SignUpViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Subjects
+    
+    private var emailSubject = CurrentValueSubject<String, Never>("")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
