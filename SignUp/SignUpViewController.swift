@@ -39,6 +39,9 @@ class SignUpViewController: UITableViewController {
     //MARK: - Subjects
     
     private var emailSubject = CurrentValueSubject<String, Never>("")
+    private var passwordSubject = CurrentValueSubject<String, Never>("")
+    private var passwordConfirmationSubject = CurrentValueSubject<String, Never>("")
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
