@@ -63,7 +63,7 @@ class SignUpViewController: UITableViewController {
     }
     
     @objc func agreeSwitchDidChange() {
-        
+        agreeToTermsSubject.send(agreeTermsCell.termsConditionsSwitch.isOn)
     }
     
     @objc func signUpTapped() {
