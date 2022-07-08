@@ -41,6 +41,7 @@ class SignUpViewController: UITableViewController {
     private var emailSubject = CurrentValueSubject<String, Never>("")
     private var passwordSubject = CurrentValueSubject<String, Never>("")
     private var passwordConfirmationSubject = CurrentValueSubject<String, Never>("")
+    private var agreeToTermsSubject = CurrentValueSubject<Bool, Never>(false)
 
     
     override func viewDidLoad() {
