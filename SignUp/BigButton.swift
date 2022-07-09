@@ -18,12 +18,17 @@ class BigButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(color: UIColor, title: String) {
-            super.init(frame: .zero)
-            setTitle(title, for: .normal)
-            backgroundColor = color
-            configure()
+    init(title: String) {
+        super.init(frame: .zero)
+        setTitle(title, for: .normal)
+        configure()
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            backgroundColor = isEnabled ? .systemBlue : .systemGray
         }
+    }
     
     private func configure() {
         layer.cornerRadius = 10

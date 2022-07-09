@@ -60,10 +60,10 @@
 		1287ACEF28735015006320A9 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				1287AD06287350E3006320A9 /* BigButton.swift */,
-				1287AD05287350E3006320A9 /* SignUpButtonCell.swift */,
 				1287AD04287350E3006320A9 /* SignUpViewController.swift */,
+				1287AD05287350E3006320A9 /* SignUpButtonCell.swift */,
 				1287AD07287350E3006320A9 /* TermsAndConditionsCell.swift */,
+				1287AD06287350E3006320A9 /* BigButton.swift */,
 				1287ACF028735015006320A9 /* AppDelegate.swift */,
 				1287ACF228735015006320A9 /* SceneDelegate.swift */,
 				1287ACF928735016006320A9 /* Assets.xcassets */,

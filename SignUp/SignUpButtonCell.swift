@@ -13,7 +13,7 @@ protocol SignUpButtonCellDelegate: AnyObject {
 
 class SignUpButtonCell: UITableViewCell {
 
-    let signUpButton = BigButton(color: .systemBlue, title: "Sign Up")
+    let signUpButton = BigButton(title: "Sign Up")
     
     weak var delegate: SignUpButtonCellDelegate?
     

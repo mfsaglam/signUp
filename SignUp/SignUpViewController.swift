@@ -57,6 +57,10 @@ class SignUpViewController: UITableViewController {
     
     //Publishers
     
+    private var formIsValid: AnyPublisher<Bool, Never> {
+        emailIsValid
+    }
+    
     private var emailIsValid: AnyPublisher<Bool, Never> {
         emailSubject
             .map { [weak self] in self?.emailIsValid($0) }
@@ -110,6 +114,10 @@ class SignUpViewController: UITableViewController {
         emailAdressField.addTarget(self, action: #selector(emailDidChange), for: .editingChanged)
         passwordField.addTarget(self, action: #selector(passwordDidChange), for: .editingChanged)
         passwordConfirmationField.addTarget(self, action: #selector(passwordConfirmationDidChange), for: .editingChanged)
+        
+        formIsValid
+            .assign(to: \.isEnabled, on: signUpButtonCell.signUpButton)
+            .store(in: &cancellables)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
