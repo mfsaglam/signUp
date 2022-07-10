@@ -58,13 +58,42 @@ class SignUpViewController: UITableViewController {
     //MARK: - Publishers
     
     private var formIsValid: AnyPublisher<Bool, Never> {
-        emailIsValid
+        Publishers.CombineLatest(
+            emailIsValid,
+            passwordValidAndConfirmed
+        )
+        .map { $0.0 && $0.1 }
+        .eraseToAnyPublisher()
     }
     
     private var emailIsValid: AnyPublisher<Bool, Never> {
         emailSubject
             .map { [weak self] in self?.emailIsValid($0) }
             .replaceNil(with: false)
+            .eraseToAnyPublisher()
+    }
+    
+    private var passwordValidAndConfirmed: AnyPublisher<Bool, Never> {
+        passwordIsValid.combineLatest(passwordMatchesConfirmation)
+            .map { valid,  confirmed in
+                valid && confirmed
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private var passwordIsValid: AnyPublisher<Bool, Never> {
+        passwordSubject
+            .map {
+                $0 != "password" && $0.count >= 8
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private var passwordMatchesConfirmation: AnyPublisher<Bool, Never> {
+        passwordSubject.combineLatest(passwordConfirmationSubject)
+            .map { password, confirmation in
+                password == confirmation
+            }
             .eraseToAnyPublisher()
     }
     
