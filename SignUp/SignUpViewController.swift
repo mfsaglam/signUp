@@ -162,6 +162,11 @@ class SignUpViewController: UITableViewController {
         formIsValid
             .assign(to: \.isEnabled, on: signUpButtonCell.signUpButton)
             .store(in: &cancellables)
+        
+        emailIsValid
+            .map { $0 ? UIColor.label : UIColor.systemRed }
+            .assign(to: \.textColor, on: emailAdressField)
+            .store(in: &cancellables)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
