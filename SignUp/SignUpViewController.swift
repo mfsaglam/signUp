@@ -58,11 +58,12 @@ class SignUpViewController: UITableViewController {
     //MARK: - Publishers
     
     private var formIsValid: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             emailIsValid,
-            passwordValidAndConfirmed
+            passwordValidAndConfirmed,
+            agreeToTermsSubject
         )
-        .map { $0.0 && $0.1 }
+        .map { $0.0 && $0.1 && $0.2 }
         .eraseToAnyPublisher()
     }
     
@@ -109,17 +110,21 @@ class SignUpViewController: UITableViewController {
         passwordConfirmationSubject.send(passwordConfirmationField.text ?? "")
     }
     
-    @objc func agreeSwitchDidChange() {
-        agreeToTermsSubject.send(agreeTermsCell.termsConditionsSwitch.isOn)
-    }
-    
     private func configureTableView() {
         tableView.rowHeight = 44
         
         emailAdressCell.backgroundColor = .systemBackground
+        emailAdressCell.selectionStyle = .none
+        
         passwordCell.backgroundColor = .systemBackground
+        passwordCell.selectionStyle = .none
+        
         passwordConfirmationCell.backgroundColor = .systemBackground
+        passwordConfirmationCell.selectionStyle = .none
+        
         agreeTermsCell.backgroundColor = .systemBackground
+        agreeTermsCell.delegate = self
+
         signUpButtonCell.backgroundColor = .systemBackground
         signUpButtonCell.delegate = self
         
@@ -131,10 +136,12 @@ class SignUpViewController: UITableViewController {
         emailAdressField.autocorrectionType = .no
         emailAdressField.keyboardType = .emailAddress
         emailAdressField.autocapitalizationType = .none
+        
         passwordField.placeholder = "Password"
         passwordField.autocorrectionType = .no
         passwordField.autocapitalizationType = .none
         passwordField.isSecureTextEntry = true
+        
         passwordConfirmationField.placeholder = "Passsword Confirmation"
         passwordConfirmationField.autocorrectionType = .no
         passwordConfirmationField.autocapitalizationType = .none
@@ -151,7 +158,6 @@ class SignUpViewController: UITableViewController {
         
         emailAdressField.addTarget(self, action: #selector(emailDidChange), for: .editingChanged)
         passwordField.addTarget(self, action: #selector(passwordDidChange), for: .editingChanged)
-        passwordConfirmationField.addTarget(self, action: #selector(passwordConfirmationDidChange), for: .editingChanged)
         
         formIsValid
             .assign(to: \.isEnabled, on: signUpButtonCell.signUpButton)
@@ -225,7 +231,13 @@ class SignUpViewController: UITableViewController {
 
 extension SignUpViewController: SignUpButtonCellDelegate {
     func didTapButton() {
-        print("button tapped")
+        print(signUpButtonCell.signUpButton.isEnabled)
+    }
+}
+
+extension SignUpViewController: TermsAndConditionsCellDelegate {
+    func didSwitchTapped() {
+        agreeToTermsSubject.send(agreeTermsCell.termsConditionsSwitch.isOn)
     }
 }
 

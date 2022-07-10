@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol TermsAndConditionsCellDelegate: AnyObject {
+    func didSwitchTapped()
+}
+
 class TermsAndConditionsCell: UITableViewCell {
     
     let termsConditionsLabel = UILabel()
     let termsConditionsSwitch = UISwitch()
     
+    weak var delegate: TermsAndConditionsCellDelegate?
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configure()
@@ -26,7 +32,7 @@ class TermsAndConditionsCell: UITableViewCell {
         termsConditionsLabel.translatesAutoresizingMaskIntoConstraints = false
         termsConditionsSwitch.translatesAutoresizingMaskIntoConstraints = false
         
-        termsConditionsSwitch.addTarget(self, action: #selector(agreeSwitchDidChange), for: .editingChanged)
+        termsConditionsSwitch.addTarget(self, action: #selector(agreeSwitchDidChange), for: .touchUpInside)
         
         contentView.addSubview(termsConditionsLabel)
         contentView.addSubview(termsConditionsSwitch)
@@ -43,7 +49,7 @@ class TermsAndConditionsCell: UITableViewCell {
     }
     
     @objc func agreeSwitchDidChange() {
-        
+        delegate?.didSwitchTapped()
     }
     
 }
