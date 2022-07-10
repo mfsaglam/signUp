@@ -99,8 +99,17 @@ class SignUpViewController: UITableViewController {
         passwordConfirmationField.frame = passwordConfirmationCell.contentView.bounds.insetBy(dx: 15, dy: 0)
         
         emailAdressField.placeholder = "Email Adress"
+        emailAdressField.autocorrectionType = .no
+        emailAdressField.keyboardType = .emailAddress
+        emailAdressField.autocapitalizationType = .none
         passwordField.placeholder = "Password"
+        passwordField.autocorrectionType = .no
+        passwordField.autocapitalizationType = .none
+        passwordField.isSecureTextEntry = true
         passwordConfirmationField.placeholder = "Passsword Confirmation"
+        passwordConfirmationField.autocorrectionType = .no
+        passwordConfirmationField.autocapitalizationType = .none
+        passwordConfirmationField.isSecureTextEntry = true
         
         emailAdressCell.addSubview(emailAdressField)
         passwordCell.addSubview(passwordField)
