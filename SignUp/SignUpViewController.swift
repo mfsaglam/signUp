@@ -62,7 +62,7 @@ class SignUpViewController: UITableViewController {
             emailIsValid,
             passwordValidAndConfirmed,
             agreeToTermsSubject
-        )
+            )
         .map { $0.0 && $0.1 && $0.2 }
         .eraseToAnyPublisher()
     }
@@ -76,7 +76,7 @@ class SignUpViewController: UITableViewController {
     
     private var passwordValidAndConfirmed: AnyPublisher<Bool, Never> {
         passwordIsValid.combineLatest(passwordMatchesConfirmation)
-            .map { valid,  confirmed in
+            .map { valid, confirmed in
                 valid && confirmed
             }
             .eraseToAnyPublisher()
@@ -231,7 +231,9 @@ class SignUpViewController: UITableViewController {
 
 extension SignUpViewController: SignUpButtonCellDelegate {
     func didTapButton() {
-        print(signUpButtonCell.signUpButton.isEnabled)
+        let alert = UIAlertController(title: "Welcome!", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
 
