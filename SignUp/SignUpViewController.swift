@@ -55,7 +55,7 @@ class SignUpViewController: UITableViewController {
         email.contains("@") && email.contains(".")
     }
     
-    //Publishers
+    //MARK: - Publishers
     
     private var formIsValid: AnyPublisher<Bool, Never> {
         emailIsValid
