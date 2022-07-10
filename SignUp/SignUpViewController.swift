@@ -92,8 +92,8 @@ class SignUpViewController: UITableViewController {
     
     private var passwordMatchesConfirmation: AnyPublisher<Bool, Never> {
         passwordSubject.combineLatest(passwordConfirmationSubject)
-            .map { password, confirmation in
-                password == confirmation
+            .map { pass, conf in
+                pass == conf
             }
             .eraseToAnyPublisher()
     }
@@ -132,11 +132,13 @@ class SignUpViewController: UITableViewController {
         passwordField.placeholder = "Password"
         passwordField.autocorrectionType = .no
         passwordField.autocapitalizationType = .none
+        passwordField.textContentType = .password
         passwordField.isSecureTextEntry = true
         
         passwordConfirmationField.placeholder = "Passsword Confirmation"
         passwordConfirmationField.autocorrectionType = .no
         passwordConfirmationField.autocapitalizationType = .none
+        passwordConfirmationField.textContentType = .password
         passwordConfirmationField.isSecureTextEntry = true
         
         emailAdressCell.addSubview(emailAdressField)
@@ -157,6 +159,11 @@ class SignUpViewController: UITableViewController {
         emailIsValid
             .map { $0 ? UIColor.label : UIColor.systemRed }
             .assign(to: \.textColor, on: emailAdressField)
+            .store(in: &cancellables)
+        
+        passwordMatchesConfirmation
+            .map { $0 ? UIColor.label : UIColor.systemRed }
+            .assign(to: \.textColor, on: passwordConfirmationField)
             .store(in: &cancellables)
     }
     
