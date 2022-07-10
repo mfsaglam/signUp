@@ -113,19 +113,11 @@ class SignUpViewController: UITableViewController {
     private func configureTableView() {
         tableView.rowHeight = 44
         
-        emailAdressCell.backgroundColor = .systemBackground
         emailAdressCell.selectionStyle = .none
-        
-        passwordCell.backgroundColor = .systemBackground
         passwordCell.selectionStyle = .none
-        
-        passwordConfirmationCell.backgroundColor = .systemBackground
         passwordConfirmationCell.selectionStyle = .none
         
-        agreeTermsCell.backgroundColor = .systemBackground
         agreeTermsCell.delegate = self
-
-        signUpButtonCell.backgroundColor = .systemBackground
         signUpButtonCell.delegate = self
         
         emailAdressField.frame = emailAdressCell.contentView.bounds.insetBy(dx: 15, dy: 0)
@@ -153,7 +145,6 @@ class SignUpViewController: UITableViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .secondarySystemBackground
         title = "Sign Up"
         
         emailAdressField.addTarget(self, action: #selector(emailDidChange), for: .editingChanged)
