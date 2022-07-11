@@ -151,6 +151,7 @@ class SignUpViewController: UITableViewController {
         
         emailAdressField.addTarget(self, action: #selector(emailDidChange), for: .editingChanged)
         passwordField.addTarget(self, action: #selector(passwordDidChange), for: .editingChanged)
+        passwordConfirmationField.addTarget(self, action: #selector(passwordConfirmationDidChange), for: .editingChanged)
         
         formIsValid
             .assign(to: \.isEnabled, on: signUpButtonCell.signUpButton)
