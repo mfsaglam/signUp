@@ -67,8 +67,15 @@ class SignUpViewController: UITableViewController {
         .eraseToAnyPublisher()
     }
     
-    private var emailIsValid: AnyPublisher<Bool, Never> {
+    private var formattedEmailAdress: AnyPublisher<String, Never> {
         emailSubject
+            .map { $0.lowercased() }
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .eraseToAnyPublisher()
+    }
+    
+    private var emailIsValid: AnyPublisher<Bool, Never> {
+        formattedEmailAdress
             .map { [weak self] in self?.emailIsValid($0) }
             .replaceNil(with: false)
             .eraseToAnyPublisher()
@@ -160,6 +167,12 @@ class SignUpViewController: UITableViewController {
         setValidColor(field: emailAdressField, publisher: emailIsValid)
         setValidColor(field: passwordField, publisher: passwordIsValid)
         setValidColor(field: passwordConfirmationField, publisher: passwordMatchesConfirmation)
+        
+        formattedEmailAdress
+            .filter { [unowned self] in $0 != emailSubject.value}
+            .map { $0 as String? }
+            .assign(to: \.text, on: emailAdressField)
+            .store(in: &cancellables)
     }
     
     private func setValidColor<P: Publisher>(field: UITextField, publisher: P)
