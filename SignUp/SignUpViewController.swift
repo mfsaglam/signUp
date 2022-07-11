@@ -157,15 +157,17 @@ class SignUpViewController: UITableViewController {
             .assign(to: \.isEnabled, on: signUpButtonCell.signUpButton)
             .store(in: &cancellables)
         
-        emailIsValid
-            .map { $0 ? UIColor.label : UIColor.systemRed }
-            .assign(to: \.textColor, on: emailAdressField)
-            .store(in: &cancellables)
-        
-        passwordMatchesConfirmation
-            .map { $0 ? UIColor.label : UIColor.systemRed }
-            .assign(to: \.textColor, on: passwordConfirmationField)
-            .store(in: &cancellables)
+        setValidColor(field: emailAdressField, publisher: emailIsValid)
+        setValidColor(field: passwordField, publisher: passwordIsValid)
+        setValidColor(field: passwordConfirmationField, publisher: passwordMatchesConfirmation)
+    }
+    
+    private func setValidColor<P: Publisher>(field: UITextField, publisher: P)
+        where P.Output == Bool, P.Failure == Never {
+            publisher
+                .map { $0 ? UIColor.label : UIColor.systemPink }
+                .assign(to: \.textColor, on: field)
+                .store(in: &cancellables)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
