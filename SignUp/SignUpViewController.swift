@@ -48,6 +48,7 @@ class SignUpViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureSubjects()
         configureTableView()
     }
     
@@ -117,6 +118,22 @@ class SignUpViewController: UITableViewController {
         passwordConfirmationSubject.send(passwordConfirmationField.text ?? "")
     }
     
+    private func configureSubjects() {
+        formattedEmailAdress
+            .filter { [unowned self] in $0 != emailSubject.value }
+            .map { $0 as String? }
+            .assign(to: \.text, on: emailAdressField)
+            .store(in: &cancellables)
+        
+        setValidColor(field: emailAdressField, publisher: emailIsValid)
+        setValidColor(field: passwordField, publisher: passwordIsValid)
+        setValidColor(field: passwordConfirmationField, publisher: passwordMatchesConfirmation)
+        
+        formIsValid
+            .assign(to: \.isEnabled, on: signUpButtonCell.signUpButton)
+            .store(in: &cancellables)
+    }
+    
     private func configureTableView() {
         tableView.rowHeight = 44
         
@@ -159,20 +176,6 @@ class SignUpViewController: UITableViewController {
         emailAdressField.addTarget(self, action: #selector(emailDidChange), for: .editingChanged)
         passwordField.addTarget(self, action: #selector(passwordDidChange), for: .editingChanged)
         passwordConfirmationField.addTarget(self, action: #selector(passwordConfirmationDidChange), for: .editingChanged)
-        
-        formIsValid
-            .assign(to: \.isEnabled, on: signUpButtonCell.signUpButton)
-            .store(in: &cancellables)
-        
-        setValidColor(field: emailAdressField, publisher: emailIsValid)
-        setValidColor(field: passwordField, publisher: passwordIsValid)
-        setValidColor(field: passwordConfirmationField, publisher: passwordMatchesConfirmation)
-        
-        formattedEmailAdress
-            .filter { [unowned self] in $0 != emailSubject.value}
-            .map { $0 as String? }
-            .assign(to: \.text, on: emailAdressField)
-            .store(in: &cancellables)
     }
     
     private func setValidColor<P: Publisher>(field: UITextField, publisher: P)
