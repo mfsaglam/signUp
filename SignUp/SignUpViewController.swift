@@ -52,10 +52,6 @@ class SignUpViewController: UITableViewController {
         configureTableView()
     }
     
-    private func emailIsValid(_ email: String) -> Bool {
-        email.contains("@") && email.contains(".")
-    }
-    
     //MARK: - Publishers
     
     private var formIsValid: AnyPublisher<Bool, Never> {
@@ -66,6 +62,10 @@ class SignUpViewController: UITableViewController {
             )
         .map { $0.0 && $0.1 && $0.2 }
         .eraseToAnyPublisher()
+    }
+    
+    private func emailIsValid(_ email: String) -> Bool {
+        email.contains("@") && email.contains(".")
     }
     
     private var formattedEmailAdress: AnyPublisher<String, Never> {
