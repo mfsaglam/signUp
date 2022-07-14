@@ -65,7 +65,7 @@ class SignUpViewController: UITableViewController {
     }
     
     private func emailIsValid(_ email: String) -> Bool {
-        email.contains("@") && email.contains(".")
+        email.contains("@") && email.contains(".com") || email.contains(".cn")
     }
     
     private var formattedEmailAdress: AnyPublisher<String, Never> {
